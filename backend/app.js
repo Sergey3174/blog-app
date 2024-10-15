@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const routes = require("./routes");
+const path = require("path");
 
 const port = 3001;
 const app = express();

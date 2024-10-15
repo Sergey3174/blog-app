@@ -57,7 +57,7 @@ const AuthorizationContainer = ({ className }) => {
 	const dispatch = useDispatch();
 
 	const onSubmit = ({ login, password }) => {
-		request('./login', 'POST', { login, password }).then(({ error, user }) => {
+		request('/login', 'POST', { login, password }).then(({ error, user }) => {
 			if (error) {
 				setServerError(`Ошибка запроса: ${error}`);
 				return;
