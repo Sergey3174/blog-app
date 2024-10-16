@@ -52,13 +52,17 @@ router.delete(
 );
 
 router.post("/", authenticated, hasRole([ROLES.ADMIN]), async (req, res) => {
-  const newPost = await addPost({
-    title: req.body.title,
-    content: req.body.content,
-    image: req.body.imageUrl,
-  });
+  try {
+    const newPost = await addPost({
+      title: req.body.title,
+      content: req.body.content,
+      image: req.body.imageUrl,
+    });
 
-  res.send({ data: mapPost(newPost) });
+    res.send({ data: mapPost(newPost) });
+  } catch (e) {
+    res.send({ error: e.message });
+  }
 });
 
 router.patch(
@@ -66,13 +70,17 @@ router.patch(
   authenticated,
   hasRole([ROLES.ADMIN]),
   async (req, res) => {
-    const updatedPost = await editPost(req.params.id, {
-      title: req.body.title,
-      content: req.body.content,
-      image: req.body.imageUrl,
-    });
+    try {
+      const updatedPost = await editPost(req.params.id, {
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.imageUrl,
+      });
 
-    res.send({ data: mapPost(updatedPost) });
+      res.send({ data: mapPost(updatedPost) });
+    } catch (e) {
+      res.send({ error: e.message });
+    }
   }
 );
 

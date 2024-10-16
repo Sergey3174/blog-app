@@ -7,6 +7,9 @@ export const savePostAsync = (id, newPostData) => (dispatch) => {
 		: request('/posts', 'POST', newPostData);
 
 	return saveRequest.then((updatedPost) => {
+		if (updatedPost.error) {
+			return updatedPost;
+		}
 		dispatch(setPostData(updatedPost.data));
 		return updatedPost.data;
 	});

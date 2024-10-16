@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Icon } from '../../../../components';
+import { Input, Icon, Error, AuthFormError } from '../../../../components';
 import { SpecialPanel } from '../special-panel/special-panel';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { sanitizeContent } from './utils';
@@ -15,6 +15,7 @@ const PostFormContainer = ({
 	const dispatch = useDispatch();
 	const [imageUrlValue, setImageUrlValue] = useState(imageUrl);
 	const [titleValue, setTitleValue] = useState(title);
+	const [error, setError] = useState(null);
 	const contentRef = useRef(null);
 	const navigate = useNavigate();
 
@@ -32,7 +33,13 @@ const PostFormContainer = ({
 				title: titleValue,
 				content: newContent,
 			}),
-		).then(({ id }) => navigate(`/post/${id}`));
+		).then((data) => {
+			if (data.error) {
+				setError(data.error);
+				return;
+			}
+			navigate(`/post/${data.id}`);
+		});
 	};
 
 	const onImageChange = ({ target }) => setImageUrlValue(target.value);
@@ -44,6 +51,7 @@ const PostFormContainer = ({
 				placeholder="Изображение..."
 				onChange={onImageChange}
 			/>
+			{error && <AuthFormError>{error}</AuthFormError>}
 			<Input
 				value={titleValue}
 				placeholder="Заголовок..."
