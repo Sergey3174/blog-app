@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Icon, Error, AuthFormError } from '../../../../components';
+import { Input, Icon, AuthFormError } from '../../../../components';
 import { SpecialPanel } from '../special-panel/special-panel';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { sanitizeContent } from './utils';
