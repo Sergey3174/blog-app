@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-
+const Comment = require("../models/Comment");
 //add
 async function addPost(post) {
   const newPost = await Post.create(post);
@@ -26,7 +26,11 @@ async function editPost(id, post) {
 
 //delete
 
-function deletePost(id) {
+async function deletePost(id) {
+  const post = await Post.findById({ _id: id });
+
+  await Comment.deleteMany({ _id: { $in: post.comments } });
+
   return Post.deleteOne({ _id: id });
 }
 
